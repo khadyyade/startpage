@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Inicio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <input type="text" id="search" placeholder="Buscar...">
+        <div class="icon" onclick="search()"></div>
+    </div>
+    <script>
+        document.getElementById('search').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                search();
+            }
+        });
+        function search() {
+            const query = document.getElementById('search').value;
+            if (query) {
+                window.location.href = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`;
+            }
+        }
+        function createBubbles() {
+            let positions = [];
+            const colors = [
+                'hsl(0, 70%, 80%)',
+                'hsl(120, 70%, 80%)',
+                'hsl(240, 70%, 80%)',
+                'hsl(60, 70%, 80%)',
+                'hsl(300, 70%, 80%)',
+                'hsl(30, 70%, 80%)',
+                'hsl(90, 70%, 80%)',
+                'hsl(150, 70%, 80%)',
+                'hsl(210, 70%, 80%)',
+                'hsl(270, 70%, 80%)',
+                'hsl(330, 70%, 80%)',
+                'hsl(45, 70%, 80%)',
+                'hsl(75, 70%, 80%)',
+                'hsl(195, 70%, 80%)',
+                'hsl(255, 70%, 80%)'
+            ];
+            const images = [
+                'image12.png',
+                'image1.png',       // WhatsApp
+                'image3.png',       // Gmail
+                'image4.png',
+                'image5.png',
+                'image6.png',
+                'image7.png',
+                'image8.png',
+                'image9.png',
+                'image10.png',
+                'image11.png',
+                'image2.png',
+                'image13.png',      // Campus Virtual URV
+                'image14.png',
+                'image15.png'
+            ];
+            const links = [
+                'https://example.com/page1',
+                'https://web.whatsapp.com/',
+                'https://mail.google.com/',
+                'https://example.com/page4',
+                'https://example.com/page5',
+                'https://example.com/page6',
+                'https://example.com/page7',
+                'https://example.com/page8',
+                'https://example.com/page9',
+                'https://example.com/page10',
+                'https://example.com/page11',
+                'https://campusvirtual.urv.cat/my/',
+                'https://example.com/page13',
+                'https://example.com/page14',
+                'https://example.com/page15'
+            ];
+            const bubbleCount = 15;
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
+            const centerX = containerRect.left + containerRect.width / 2;
+            const centerY = containerRect.top + containerRect.height / 2;
+            const margin = 0.1 * Math.min(window.innerWidth, window.innerHeight); // 10% margin
+
+            for (let i = 0; i < bubbleCount; i++) {
+                let bubble = document.createElement('a');
+                bubble.classList.add('bubble');
+                bubble.href = links[i];
+                bubble.target = '_blank';
+                let size = Math.random() * 30 + 65; // Increased size range
+                let x, y, overlapping;
+
+                do {
+                    x = Math.random() * (window.innerWidth - size - 2 * margin) + margin;
+                    y = Math.random() * (window.innerHeight - size - 2 * margin) + margin;
+                    overlapping = positions.some(pos => Math.hypot(pos.x - x, pos.y - y) < (size + pos.size) / 2);
+                } while (overlapping || (y > containerRect.top - size && y < containerRect.bottom + size));
+
+                const relativeX = x - centerX;
+                const relativeY = y - centerY;
+                positions.push({ x, y, relativeX, relativeY, size });
+
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.background = colors[i]; // Ensure unique colors
+                bubble.style.borderColor = colors[i]; // Set border color to match bubble color
+                bubble.style.boxShadow = `0 0 5px ${colors[i]}, 0 0 10px ${colors[i]}, 0 0 15px ${colors[i]}, 0 0 20px ${colors[i]}`;
+                bubble.style.top = `${y}px`;
+                bubble.style.left = `${x}px`;
+                let img = document.createElement('img');
+                img.src = images[i];
+                bubble.appendChild(img);
+                document.body.appendChild(bubble);
+            }
+
+            // Reposition bubbles on window resize
+            window.addEventListener('resize', () => {
+                const containerRect = container.getBoundingClientRect();
+                const centerX = containerRect.left + containerRect.width / 2;
+                const centerY = containerRect.top + containerRect.height / 2;
+                let availablePositions = [];
+
+                positions.forEach((pos, index) => {
+                    const bubble = document.querySelectorAll('.bubble')[index];
+                    if (bubble) {
+                        let newX = centerX + pos.relativeX;
+                        let newY = centerY + pos.relativeY;
+
+                        // Ensure bubbles stay within the window bounds
+                        newX = Math.max(margin, Math.min(newX, window.innerWidth - pos.size - margin));
+                        newY = Math.max(margin, Math.min(newY, window.innerHeight - pos.size - margin));
+
+                        // Ensure bubbles do not overlap
+                        let overlapping = availablePositions.some(ap => Math.hypot(ap.x - newX, ap.y - newY) < (pos.size + ap.size) / 2);
+                        if (!overlapping) {
+                            bubble.style.top = `${newY}px`;
+                            bubble.style.left = `${newX}px`;
+                            bubble.style.display = 'block';
+                            availablePositions.push({ x: newX, y: newY, size: pos.size });
+                        } else {
+                            bubble.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        }
+        createBubbles();
+    </script>
+</body>
+</html>
