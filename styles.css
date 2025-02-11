@@ -4,7 +4,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url('bubble.jpg') no-repeat center center/cover;
+    background: url('fondo1.jpg') no-repeat center center/cover;
     overflow: hidden;
     position: relative;
 }
@@ -25,7 +25,7 @@ body {
 .container:hover {
     box-shadow: 0 0 15px #00bfff;
 }
-.container:active {
+.container:active, .container.highlight {
     background: #1e3a5f;
     box-shadow: 0 0 20px #00bfff;
 }
@@ -49,7 +49,7 @@ input {
 .bubble {
     position: absolute;
     border-radius: 50%;
-    transition: 0.3s;
+    transition: transform 0.3s, box-shadow 1s ease-in-out;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -59,11 +59,13 @@ input {
     z-index: 1;
     background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.1));
     box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.2), inset 10px 10px 20px rgba(255, 255, 255, 0.5), 0 0 15px rgba(0, 0, 0, 0.1);
-    border: 0.1px solid;
+    border: 2px solid;
+    animation: float 10s ease-in-out infinite;
 }
 .bubble:hover {
     filter: brightness(120%);
     transform: scale(1.1);
+    box-shadow: 0 0 5px var(--bubble-color), 0 0 10px var(--bubble-color), 0 0 15px var(--bubble-color), 0 0 20px var(--bubble-color);
 }
 .bubble img {
     width: 60%;
@@ -73,4 +75,233 @@ input {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+#reset-button {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 30px; /* Smaller size */
+    height: 30px; /* Smaller size */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 3;
+}
+#reset-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+#toggle-animations-button {
+    position: fixed;
+    bottom: 50px;
+    right: 10px;
+    width: 30px; /* Smaller size */
+    height: 30px; /* Smaller size */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 3;
+}
+#toggle-animations-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#change-background-button {
+    position: fixed;
+    bottom: 90px;
+    right: 10px;
+    width: 30px; /* Smaller size */
+    height: 30px; /* Smaller size */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 3;
+}
+#change-background-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.floating-bubble {
+    position: absolute;
+    background: url('bubble.png') no-repeat center center;
+    background-size: contain;
+    animation: float-up 3s ease-in-out forwards; /* Increase duration to 3s */
+}
+@keyframes float-up {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    5% {
+        transform: translateY(-5px) translateX(-1px);
+        opacity: 0.1;
+    }
+    10% {
+        transform: translateY(-10px) translateX(-2px);
+    }
+    15% {
+        transform: translateY(-15px) translateX(-3px);
+    }
+    20% {
+        transform: translateY(-20px) translateX(-4px);
+    }
+    25% {
+        transform: translateY(-25px) translateX(-3px);
+    }
+    30% {
+        transform: translateY(-30px) translateX(-2px);
+        opacity: 1;
+    }
+    35% {
+        transform: translateY(-35px) translateX(-1px);
+    }
+    40% {
+        transform: translateY(-40px) translateX(0px);
+    }
+    45% {
+        transform: translateY(-45px) translateX(1px);
+    }
+    50% {
+        transform: translateY(-50px) translateX(2px);
+    }
+    55% {
+        transform: translateY(-55px) translateX(3px);
+    }
+    60% {
+        transform: translateY(-60px) translateX(4px);
+        opacity: 0.5;
+    }
+    65% {
+        transform: translateY(-65px) translateX(3px);
+    }
+    70% {
+        transform: translateY(-70px) translateX(2px);
+        opacity: 0.3;
+    }
+    75% {
+        transform: translateY(-75px) translateX(1px);
+    }
+    80% {
+        transform: translateY(-80px) translateX(0px);
+        opacity: 0.2;
+    }
+    85% {
+        transform: translateY(-85px) translateX(-1px);
+    }
+    90% {
+        transform: translateY(-90px) translateX(-2px);
+        opacity: 0.1;
+    }
+    95% {
+        transform: translateY(-95px) translateX(-3px);
+    }
+    100% {
+        transform: translateY(-100px) translateX(-4px);
+        opacity: 0;
+    }
+}
+.particle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particle-animation 1s ease-out forwards;
+}
+@keyframes particle-animation {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+@keyframes float {
+    0% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(7px, -4px);
+    }
+    50% {
+        transform: translate(0px, 3px);
+    }
+    50% {
+        transform: translate(-3px, -9px);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+#clockContainerWrapper {
+    position: absolute;
+    top: 50%;
+    width: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    pointer-events: none; /* Make the container unselectable */
+}
+
+#clockContainerWrapper.left {
+    left: 0;
+    justify-content: flex-end;
+    padding-right: 25%;
+}
+
+#clockContainerWrapper.right {
+    right: 0;
+    justify-content: flex-start;
+    padding-left: 25%;
+}
+
+#clockContainer {
+    text-align: center;
+    color: rgba(255, 255, 255, 1); /* Fully opaque white color */
+    font-family: 'Exo', sans-serif; /* Change to a similar font */
+    text-shadow: 0 0 10px rgba(0, 0, 43), 0 0 20px rgb(0, 0, 43), 0 0 30px rgba(0, 0, 43); /* Increase dark blue shadow visibility */
+    transition: opacity 0.5s ease-in-out; /* Add transition effect */
+    min-width: 150px;
+}
+
+#hour, #minute {
+    font-size: 5vw; /* Slightly decrease size */
+    line-height: 1;
+    font-weight: 600; /* Slightly increase font weight */
+}
+
+#date {
+    font-size: 1.5vw; /* Decrease size */
+    font-weight: 600; /* Slightly increase font weight */
+}
+
+@media (min-width: 768px) {
+    #clockContainerWrapper {
+        display: flex; /* Show on larger screens */
+    }
+}
+
+@media (max-width: 768px) {
+    #clockContainerWrapper {
+        display: none; /* Hide on mobile devices */
+    }
+}
+
+#clockContainerWrapper.left:hover #clockContainer,
+#clockContainerWrapper.right:hover #clockContainer {
+    opacity: 0;
+}
+
+body:hover #clockContainerWrapper.left:hover #clockContainer,
+body:hover #clockContainerWrapper.right:hover #clockContainer {
+    opacity: 1;
 }
