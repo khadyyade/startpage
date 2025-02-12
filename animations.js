@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    initializeBubbles();
     createBubbles();
     addSearchBarEffects();
     animateBubbles();
@@ -14,6 +15,98 @@ let animationsEnabled = true;
 let bubbleInterval;
 let currentBackgroundIndex = 0;
 const backgrounds = ['fondo1.jpg', 'fondo2.jpg', 'fondo3.png', 'fondo4.png', 'fondo5.jpg'];
+
+function initializeBubbles() {
+    if (!localStorage.getItem('bubbles')) {
+        const initialBubbles = [
+            {
+                "name": "YouTube",
+                "backgroundColor": "hsl(0, 70%, 80%)",
+                "link": "https://web.whatsapp.com/",
+                "image": "youtube.png"
+            },
+            {
+                "name": "WhatsApp",
+                "backgroundColor": "hsl(120, 70%, 80%)",
+                "link": "https://web.whatsapp.com/",
+                "image": "whatsapp.png"
+            },
+            {
+                "name": "Gmail",
+                "backgroundColor": "hsl(240, 70%, 80%)",
+                "link": "https://mail.google.com/",
+                "image": "gmail.png"
+            },
+            {
+                "name": "Google Drive",
+                "backgroundColor": "hsl(60, 70%, 80%)",
+                "link": "https://drive.google.com/drive/home",
+                "image": "drive.png"
+            },
+            {
+                "name": "Copilot",
+                "backgroundColor": "hsl(300, 70%, 80%)",
+                "link": "https://copilot.microsoft.com/",
+                "image": "copilot.png"
+            },
+            {
+                "name": "GitHub",
+                "backgroundColor": "hsl(30, 70%, 80%)",
+                "link": "https://github.com/garcilaso05",
+                "image": "github.png"
+            },
+            {
+                "name": "Spotify",
+                "backgroundColor": "hsl(90, 70%, 80%)",
+                "link": "https://open.spotify.com/",
+                "image": "spotify.png"
+            },
+            {
+                "name": "ChatGPT",
+                "backgroundColor": "hsl(150, 70%, 80%)",
+                "link": "https://chatgpt.com/",
+                "image": "chatgpt.png"
+            },
+            {
+                "name": "OneDrive",
+                "backgroundColor": "hsl(210, 70%, 80%)",
+                "link": "https://rovira-my.sharepoint.com/",
+                "image": "onedrive.png"
+            },
+            {
+                "name": "Image 10",
+                "backgroundColor": "hsl(270, 70%, 80%)",
+                "link": "https://example.com/page10",
+                "image": "image10.png"
+            },
+            {
+                "name": "Image 11",
+                "backgroundColor": "hsl(330, 70%, 80%)",
+                "link": "https://example.com/page11",
+                "image": "image11.png"
+            },
+            {
+                "name": "Campus Virtual URV",
+                "backgroundColor": "hsl(45, 70%, 80%)",
+                "link": "https://campusvirtual.urv.cat/my/",
+                "image": "moodle.png"
+            },
+            {
+                "name": "Outlook",
+                "backgroundColor": "hsl(75, 70%, 80%)",
+                "link": "https://outlook.office.com/mail/",
+                "image": "outlook.png"
+            },
+            {
+                "name": "Image 15",
+                "backgroundColor": "hsl(195, 70%, 80%)",
+                "link": "https://example.com/page15",
+                "image": "image15.png"
+            }
+        ];
+        localStorage.setItem('bubbles', JSON.stringify(initialBubbles));
+    }
+}
 
 function toggleAnimations() {
     animationsEnabled = !animationsEnabled;
@@ -42,70 +135,19 @@ function changeBackground() {
 
 function createBubbles() {
     let positions = [];
-    const colors = [
-        'hsl(0, 70%, 80%)',
-        'hsl(120, 70%, 80%)',
-        'hsl(240, 70%, 80%)',
-        'hsl(60, 70%, 80%)',
-        'hsl(300, 70%, 80%)',
-        'hsl(30, 70%, 80%)',
-        'hsl(90, 70%, 80%)',
-        'hsl(150, 70%, 80%)',
-        'hsl(210, 70%, 80%)',
-        'hsl(270, 70%, 80%)',
-        'hsl(330, 70%, 80%)',
-        'hsl(45, 70%, 80%)',
-        'hsl(75, 70%, 80%)',
-        'hsl(195, 70%, 80%)',
-        'hsl(255, 70%, 80%)'
-    ];
-    const images = [
-        'youtube.png',
-        'image1.png',       // WhatsApp
-        'image3.png',       // Gmail
-        'drive.png',
-        'copilot.png',
-        'github.png',
-        'spotify.png',
-        'chatgpt.png',
-        'onedrive.png',
-        'image10.png',
-        'image11.png',
-        'image2.png',
-        'image13.png',      // Campus Virtual URV
-        'outlook.png',
-        'image15.png'
-    ];
-    const links = [
-        'https://www.youtube.com/',
-        'https://web.whatsapp.com/',
-        'https://mail.google.com/',
-        'https://drive.google.com/drive/home',
-        'https://copilot.microsoft.com/',
-        'https://github.com/garcilaso05',
-        'https://open.spotify.com/',
-        'https://chatgpt.com/',
-        'https://rovira-my.sharepoint.com/',
-        'https://example.com/page10',
-        'https://example.com/page11',
-        'https://campusvirtual.urv.cat/my/',
-        'https://example.com/page13',
-        'https://outlook.office.com/mail/',
-        'https://example.com/page15'
-    ];
-    const bubbleCount = window.innerWidth < 768 ? 8 : 15; // Reduce bubble count on smaller screens
+    const bubbles = JSON.parse(localStorage.getItem('bubbles')) || [];
     const container = document.querySelector('.container');
     const containerRect = container.getBoundingClientRect();
     const centerX = containerRect.left + containerRect.width / 2;
     const centerY = containerRect.top + containerRect.height / 2;
     const margin = 0.1 * Math.min(window.innerWidth, window.innerHeight); // 10% margin
 
-    for (let i = 0; i < bubbleCount; i++) {
-        let bubble = document.createElement('a');
-        bubble.classList.add('bubble');
-        bubble.href = links[i];
-        bubble.target = '_blank';
-        bubble.style.setProperty('--bubble-color', colors[i]); // Set CSS variable for bubble color
+    bubbles.forEach((bubble, i) => {
+        let bubbleElement = document.createElement('a');
+        bubbleElement.classList.add('bubble');
+        bubbleElement.href = bubble.link;
+        bubbleElement.target = '_blank';
+        bubbleElement.style.setProperty('--bubble-color', bubble.backgroundColor); // Set CSS variable for bubble color
         let size = window.innerWidth < 768 ? Math.random() * 20 + 40 : Math.random() * 30 + 65; // Smaller size range for smaller screens
         let x, y, overlapping;
 
@@ -119,19 +161,43 @@ function createBubbles() {
         const relativeY = y - centerY;
         positions.push({ x, y, relativeX, relativeY, size });
 
-        bubble.style.width = `${size}px`;
-        bubble.style.height = `${size}px`;
-        bubble.style.background = colors[i]; // Ensure unique colors
-        bubble.style.borderColor = colors[i]; // Set border color to match bubble color
-        bubble.style.top = `${y}px`;
-        bubble.style.left = `${x}px`;
-        bubble.style.transition = 'top 1s ease-in-out, left 1s ease-in-out'; // Add transition for smooth movement
-        bubble.style.animation = `float ${Math.random() * 5 + 5}s ease-in-out infinite`; // Randomize animation duration
+        bubbleElement.style.width = `${size}px`;
+        bubbleElement.style.height = `${size}px`;
+        bubbleElement.style.background = bubble.backgroundColor; // Ensure unique colors
+        bubbleElement.style.borderColor = bubble.backgroundColor; // Set border color to match bubble color
+        bubbleElement.style.top = `${y}px`;
+        bubbleElement.style.left = `${x}px`;
+        bubbleElement.style.transition = 'top 1s ease-in-out, left 1s ease-in-out, box-shadow 0.5s'; // Add transition for smooth movement and box-shadow
         let img = document.createElement('img');
-        img.src = images[i];
-        bubble.appendChild(img);
-        document.body.appendChild(bubble);
-    }
+        img.src = bubble.image;
+        bubbleElement.appendChild(img);
+
+        // Add delete button
+        let deleteButton = document.createElement('div');
+        deleteButton.classList.add('delete-button');
+        deleteButton.innerHTML = '×';
+        deleteButton.onclick = (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            deleteBubble(i);
+        };
+        bubbleElement.appendChild(deleteButton);
+
+        bubbleElement.onmouseover = () => {
+            deleteButton.style.opacity = '1';
+            deleteButton.style.visibility = 'visible';
+        };
+        bubbleElement.onmouseout = () => {
+            setTimeout(() => {
+                if (!deleteButton.matches(':hover')) {
+                    deleteButton.style.opacity = '0';
+                    deleteButton.style.visibility = 'hidden';
+                }
+            }, 400); // Delay the disappearance by 500ms
+        };
+
+        document.body.appendChild(bubbleElement);
+    });
 
     // Reposition bubbles on window resize
     window.addEventListener('resize', () => {
@@ -163,6 +229,13 @@ function createBubbles() {
             }
         });
     });
+}
+
+function deleteBubble(index) {
+    const bubbles = JSON.parse(localStorage.getItem('bubbles')) || [];
+    bubbles.splice(index, 1);
+    localStorage.setItem('bubbles', JSON.stringify(bubbles));
+    location.reload();
 }
 
 function resetBubbles() {
@@ -249,4 +322,43 @@ function animateBubbles() {
         bubble.style.setProperty('--randomX', `${randomX}px`);
         bubble.style.setProperty('--randomY', `${randomY}px`);
     });
+}
+
+function openAddBubbleWindow() {
+    document.getElementById('addBubbleWindow').style.display = 'block';
+}
+
+function addBubble() {
+    const name = document.getElementById('bubbleName').value;
+    const link = document.getElementById('bubbleLink').value;
+    const color = document.getElementById('bubbleColor').value;
+    const imageInput = document.getElementById('bubbleImage');
+    const imageFile = imageInput.files[0];
+    let imagePath = '';
+
+    if (imageFile) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            imagePath = event.target.result;
+            saveBubble(name, link, color, imagePath);
+        };
+        reader.readAsDataURL(imageFile);
+    } else {
+        saveBubble(name, link, color, '');
+    }
+}
+
+function saveBubble(name, link, color, imagePath) {
+    const bubbles = JSON.parse(localStorage.getItem('bubbles')) || [];
+    const newBubble = {
+        name: name,
+        backgroundColor: color,
+        link: link,
+        image: imagePath || ''
+    };
+    bubbles.push(newBubble);
+    localStorage.setItem('bubbles', JSON.stringify(bubbles));
+    alert('Burbuja añadida con éxito');
+    document.getElementById('addBubbleWindow').style.display = 'none';
+    location.reload();
 }

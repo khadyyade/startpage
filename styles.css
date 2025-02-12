@@ -49,7 +49,7 @@ input {
 .bubble {
     position: absolute;
     border-radius: 50%;
-    transition: transform 0.3s, box-shadow 1s ease-in-out;
+    transition: transform 0.3s, box-shadow 1s ease-in-out, filter 0.5s, background 0.5s; /* Add transition for background */
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -66,6 +66,7 @@ input {
     filter: brightness(120%);
     transform: scale(1.1);
     box-shadow: 0 0 5px var(--bubble-color), 0 0 10px var(--bubble-color), 0 0 15px var(--bubble-color), 0 0 20px var(--bubble-color);
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.3)); /* Brighten background on hover */
 }
 .bubble img {
     width: 60%;
@@ -124,6 +125,58 @@ input {
     width: 100%;
     height: 100%;
     object-fit: contain;
+}
+
+#add-bubble-button {
+    position: fixed;
+    bottom: 130px;
+    right: 10px;
+    width: 30px; /* Smaller size */
+    height: 30px; /* Smaller size */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 3;
+}
+#add-bubble-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.add-bubble-window {
+    position: fixed;
+    bottom: 170px;
+    right: 10px;
+    width: 300px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    padding: 20px;
+    display: none;
+    z-index: 4;
+}
+.add-bubble-window input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+.add-bubble-window input[type="color"] {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    height: 40px;
+}
+.add-bubble-window button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background: #00bfff;
+    color: white;
 }
 
 .floating-bubble {
@@ -304,4 +357,35 @@ input {
 body:hover #clockContainerWrapper.left:hover #clockContainer,
 body:hover #clockContainerWrapper.right:hover #clockContainer {
     opacity: 1;
+}
+
+.delete-button {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0.5s; /* Add transition for opacity and visibility */
+}
+.bubble:hover .delete-button,
+.delete-button:hover {
+    opacity: 1; /* Ensure the delete button is fully visible */
+    visibility: visible; /* Ensure the delete button is visible */
+}
+.bubble .delete-button {
+    opacity: 0; /* Start with the delete button hidden */
+    visibility: hidden; /* Start with the delete button hidden */
 }

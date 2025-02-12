@@ -39,6 +39,16 @@
     <button id="toggle-animations-button" onclick="toggleAnimations()">
         <img src="animacionesOn.png" alt="Toggle Animations">
     </button>
+    <button id="add-bubble-button" onclick="openAddBubbleWindow()">
+        <img src="addBubble.png" alt="Add Bubble">
+    </button>
+    <div class="add-bubble-window" id="addBubbleWindow">
+        <input type="text" id="bubbleName" placeholder="Nombre de la burbuja">
+        <input type="text" id="bubbleLink" placeholder="Hiperenlace">
+        <input type="color" id="bubbleColor" value="#ff0000">
+        <input type="file" id="bubbleImage" accept="image/*">
+        <button onclick="addBubble()">Añadir Burbuja</button>
+    </div>
     <script src="animations.js"></script>
     <script src="clock.js"></script>
 </body>
