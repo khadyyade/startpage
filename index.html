@@ -30,17 +30,20 @@
             <div id="date"></div>
         </div>
     </div>
-    <button id="change-background-button" onclick="changeBackground()">
-        <img src="changeBackground.png" alt="Change Background">
-    </button>
     <button id="reset-button" onclick="resetBubbles()">
         <img src="reset.png" alt="Reset">
     </button>
     <button id="toggle-animations-button" onclick="toggleAnimations()">
         <img src="animacionesOn.png" alt="Toggle Animations">
     </button>
+    <button id="change-background-button" onclick="changeBackground()">
+        <img src="changeBackground.png" alt="Change Background">
+    </button>
     <button id="add-bubble-button" onclick="openAddBubbleWindow()">
         <img src="addBubble.png" alt="Add Bubble">
+    </button>
+    <button id="resetBubbles" onclick="initBubble()">
+        <img src="restart.png" alt="Restart">
     </button>
     <div class="add-bubble-window" id="addBubbleWindow">
         <input type="text" id="bubbleName" placeholder="Nombre de la burbuja">

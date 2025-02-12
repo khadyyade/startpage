@@ -22,7 +22,7 @@ function initializeBubbles() {
             {
                 "name": "YouTube",
                 "backgroundColor": "hsl(0, 70%, 80%)",
-                "link": "https://web.whatsapp.com/",
+                "link": "https://www.youtube.com/",
                 "image": "youtube.png"
             },
             {
@@ -74,16 +74,16 @@ function initializeBubbles() {
                 "image": "onedrive.png"
             },
             {
-                "name": "Image 10",
-                "backgroundColor": "hsl(270, 70%, 80%)",
-                "link": "https://example.com/page10",
-                "image": "image10.png"
+                "name": "Deepl",
+                "backgroundColor": "hsl(182, 37.80%, 64.70%)",
+                "link": "https://www.deepl.com/es/translator",
+                "image": "deepl.png"
             },
             {
-                "name": "Image 11",
-                "backgroundColor": "hsl(330, 70%, 80%)",
-                "link": "https://example.com/page11",
-                "image": "image11.png"
+                "name": "SoftCatala",
+                "backgroundColor": "hsl(327, 69.20%, 87.30%)",
+                "link": "https://www.softcatala.org/corrector/",
+                "image": "softcatala.png"
             },
             {
                 "name": "Campus Virtual URV",
@@ -98,10 +98,10 @@ function initializeBubbles() {
                 "image": "outlook.png"
             },
             {
-                "name": "Image 15",
+                "name": "Linkedin",
                 "backgroundColor": "hsl(195, 70%, 80%)",
-                "link": "https://example.com/page15",
-                "image": "image15.png"
+                "link": "https://www.linkedin.com/feed/",
+                "image": "linkedin.png"
             }
         ];
         localStorage.setItem('bubbles', JSON.stringify(initialBubbles));
@@ -348,8 +348,32 @@ function addBubble() {
     }
 }
 
+function initBubble() {
+    saveBubble("YouTube", "https://www.youtube.com/", "hsl(0, 70%, 80%)", "youtube.png");
+    saveBubble("WhatsApp", "https://web.whatsapp.com/", "hsl(120, 70%, 80%)", "whatsapp.png");
+    saveBubble("Gmail", "https://mail.google.com/", "hsl(240, 70%, 80%)", "gmail.png");
+    saveBubble("Google Drive", "https://drive.google.com/drive/home", "hsl(60, 70%, 80%)", "drive.png");
+    saveBubble("Copilot", "https://copilot.microsoft.com/", "hsl(300, 70%, 80%)", "copilot.png");
+    saveBubble("GitHub", "https://github.com/garcilaso05", "hsl(30, 70%, 80%)", "github.png");
+    saveBubble("Spotify", "https://open.spotify.com/", "hsl(90, 70%, 80%)", "spotify.png");
+    saveBubble("ChatGPT", "https://chatgpt.com/", "hsl(150, 70%, 80%)", "chatgpt.png");
+    saveBubble("OneDrive", "https://rovira-my.sharepoint.com/", "hsl(210, 70%, 80%)", "onedrive.png");
+    saveBubble("Deepl", "https://www.deepl.com/es/translator", "hsl(182, 37.80%, 64.70%)", "deepl.png");
+    saveBubble("SoftCatala", "https://www.softcatala.org/corrector/", "hsl(327, 69.20%, 87.30%)", "softcatala.png");
+    saveBubble("Campus Virtual URV", "https://campusvirtual.urv.cat/my/", "hsl(45, 70%, 80%)", "moodle.png");
+    saveBubble("Outlook", "https://outlook.office.com/mail/", "hsl(75, 70%, 80%)", "outlook.png");
+    saveBubble("LinkedIn", "https://www.linkedin.com/feed/", "hsl(195, 70%, 80%)", "linkedin.png");
+}
+
 function saveBubble(name, link, color, imagePath) {
     const bubbles = JSON.parse(localStorage.getItem('bubbles')) || [];
+    
+    // Check for duplicate name or link
+    const duplicate = bubbles.some(bubble => bubble.name === name || bubble.link === link);
+    if (duplicate) {
+        return;
+    }
+
     const newBubble = {
         name: name,
         backgroundColor: color,
@@ -358,7 +382,6 @@ function saveBubble(name, link, color, imagePath) {
     };
     bubbles.push(newBubble);
     localStorage.setItem('bubbles', JSON.stringify(bubbles));
-    alert('Burbuja añadida con éxito');
     document.getElementById('addBubbleWindow').style.display = 'none';
     location.reload();
 }

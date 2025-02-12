@@ -179,6 +179,23 @@ input {
     color: white;
 }
 
+#resetBubbles {
+    position: fixed;
+    bottom: 170px; /* Adjust position to be above the other buttons */
+    right: 10px;
+    width: 30px; /* Smaller size */
+    height: 30px; /* Smaller size */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 3;
+}
+#resetBubbles img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
 .floating-bubble {
     position: absolute;
     background: url('bubble.png') no-repeat center center;
