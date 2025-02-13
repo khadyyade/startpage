@@ -9,6 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('resetButton').src = 'reset.png';
     document.getElementById('toggleAnimationsButton').src = 'animacionesOn.png';
     document.getElementById('changeBackgroundButton').src = 'changeBackground.png'; // Set initial image for the new button
+    document.getElementById('uploadBackgroundButton').src = 'upload.png'; // Set initial image for the new button
+
+    // Load custom background if available
+    loadCustomBackground();
+
+    // Focus the search input when the page loads
+    document.getElementById('search').focus();
 });
 
 let animationsEnabled = true;
@@ -167,10 +174,18 @@ function createBubbles() {
         bubbleElement.style.borderColor = bubble.backgroundColor; // Set border color to match bubble color
         bubbleElement.style.top = `${y}px`;
         bubbleElement.style.left = `${x}px`;
-        bubbleElement.style.transition = 'top 1s ease-in-out, left 1s ease-in-out, box-shadow 0.5s'; // Add transition for smooth movement and box-shadow
         let img = document.createElement('img');
-        img.src = bubble.image;
-        bubbleElement.appendChild(img);
+        if (bubble.image) {
+            img.src = bubble.image;
+            bubbleElement.appendChild(img);
+        } else {
+            let text = document.createElement('div');
+            text.innerText = bubble.name;
+            text.style.color = '#fff';
+            text.style.textAlign = 'center';
+            text.style.padding = '10px';
+            bubbleElement.appendChild(text);
+        }
 
         // Add delete button
         let deleteButton = document.createElement('div');
@@ -196,10 +211,48 @@ function createBubbles() {
             }, 400); // Delay the disappearance by 500ms
         };
 
+        // Add drag functionality
+        let isDragging = false;
+        let offsetX, offsetY;
+        let wasDragging = false;
+
+        bubbleElement.addEventListener('mousedown', (e) => {
+            e.preventDefault(); // Prevent default drag behavior
+            isDragging = true;
+            wasDragging = false;
+            offsetX = e.clientX - bubbleElement.getBoundingClientRect().left;
+            offsetY = e.clientY - bubbleElement.getBoundingClientRect().top;
+            bubbleElement.classList.add('dragging');
+            bubbleElement.style.animationPlayState = 'paused'; // Pause animation during drag
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                wasDragging = true;
+                bubbleElement.style.top = `${e.clientY - offsetY}px`;
+                bubbleElement.style.left = `${e.clientX - offsetX}px`;
+                checkWindowBounds(bubbleElement, size);
+            }
+        });
+
+        document.addEventListener('mouseup', (e) => {
+            if (isDragging) {
+                isDragging = false;
+                bubbleElement.classList.remove('dragging');
+                bubbleElement.style.animationPlayState = 'running'; // Resume animation after drag
+            }
+        });
+
+        bubbleElement.addEventListener('click', (e) => {
+            if (wasDragging) {
+                e.preventDefault(); // Prevent link from opening if it was dragged
+            }
+        });
+
         document.body.appendChild(bubbleElement);
     });
 
-    // Reposition bubbles on window resize
+    // Reposition and resize bubbles on window resize
     window.addEventListener('resize', () => {
         const containerRect = container.getBoundingClientRect();
         const centerX = containerRect.left + containerRect.width / 2;
@@ -221,14 +274,36 @@ function createBubbles() {
                 if (!overlapping) {
                     bubble.style.top = `${newY}px`;
                     bubble.style.left = `${newX}px`;
+                    bubble.style.transition = 'top 0.5s, left 0.5s'; // Add transition for smooth sliding
                     bubble.style.display = 'block';
                     availablePositions.push({ x: newX, y: newY, size: pos.size });
                 } else {
                     bubble.style.display = 'none';
                 }
+
+                // Adjust bubble size based on window width
+                let newSize = window.innerWidth < 768 ? Math.random() * 20 + 40 : Math.random() * 30 + 65;
+                bubble.style.width = `${newSize}px`;
+                bubble.style.height = `${newSize}px`;
             }
         });
     });
+}
+
+function checkWindowBounds(bubble, size) {
+    const rect = bubble.getBoundingClientRect();
+    if (rect.left < 0) {
+        bubble.style.left = '0px';
+    }
+    if (rect.top < 0) {
+        bubble.style.top = '0px';
+    }
+    if (rect.right > window.innerWidth) {
+        bubble.style.left = `${window.innerWidth - size}px`;
+    }
+    if (rect.bottom > window.innerHeight) {
+        bubble.style.top = `${window.innerHeight - size}px`;
+    }
 }
 
 function deleteBubble(index) {
@@ -259,9 +334,9 @@ function resetBubbles() {
             });
         } while (overlapping || (y > containerRect.top - size && y < containerRect.bottom + size));
 
-        bubble.style.transition = 'top 1s ease-in-out, left 1s ease-in-out';
         bubble.style.top = `${y}px`;
         bubble.style.left = `${x}px`;
+        bubble.style.transition = 'top 0.5s, left 0.5s'; // Add transition for smooth sliding
     });
 }
 
@@ -282,7 +357,7 @@ function addSearchBarEffects() {
     searchBar.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
             const query = searchBar.value;
-            window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+            window.open(`https://duckduckgo.com/?q=${encodeURIComponent(query)}`, '_blank');
         }
     });
 
@@ -328,12 +403,30 @@ function openAddBubbleWindow() {
     document.getElementById('addBubbleWindow').style.display = 'block';
 }
 
+function closeAddBubbleWindow() {
+    document.getElementById('addBubbleWindow').style.display = 'none';
+    resetAddBubbleWindow();
+}
+
+function resetAddBubbleWindow() {
+    document.getElementById('bubbleName').value = '';
+    document.getElementById('bubbleLink').value = '';
+    document.getElementById('bubbleColor').value = '#ff0000';
+    document.getElementById('bubbleImage').value = '';
+}
+
 function addBubble() {
-    const name = document.getElementById('bubbleName').value;
+    const name = document.getElementById('bubbleName').value.trim();
     const link = document.getElementById('bubbleLink').value;
     const color = document.getElementById('bubbleColor').value;
     const imageInput = document.getElementById('bubbleImage');
     const imageFile = imageInput.files[0];
+
+    if (!name) {
+        alert('El nombre de la burbuja no puede estar vacío.');
+        return;
+    }
+
     let imagePath = '';
 
     if (imageFile) {
@@ -346,6 +439,20 @@ function addBubble() {
     } else {
         saveBubble(name, link, color, '');
     }
+}
+
+function saveBubble(name, link, color, imagePath) {
+    const bubbles = JSON.parse(localStorage.getItem('bubbles')) || [];
+
+    // Check for duplicate name or link
+    const duplicate = bubbles.some(bubble => bubble.name === name || bubble.link === link);
+    if (duplicate) {
+        return;
+    }
+
+    bubbles.push({ name, link, backgroundColor: color, image: imagePath });
+    localStorage.setItem('bubbles', JSON.stringify(bubbles));
+    location.reload();
 }
 
 function initBubble() {
@@ -362,26 +469,37 @@ function initBubble() {
     saveBubble("SoftCatala", "https://www.softcatala.org/corrector/", "hsl(327, 69.20%, 87.30%)", "softcatala.png");
     saveBubble("Campus Virtual URV", "https://campusvirtual.urv.cat/my/", "hsl(45, 70%, 80%)", "moodle.png");
     saveBubble("Outlook", "https://outlook.office.com/mail/", "hsl(75, 70%, 80%)", "outlook.png");
-    saveBubble("LinkedIn", "https://www.linkedin.com/feed/", "hsl(195, 70%, 80%)", "linkedin.png");
+    saveBubble("Linkedin", "https://www.linkedin.com/feed/", "hsl(195, 70%, 80%)", "linkedin.png");
 }
 
-function saveBubble(name, link, color, imagePath) {
-    const bubbles = JSON.parse(localStorage.getItem('bubbles')) || [];
-    
-    // Check for duplicate name or link
-    const duplicate = bubbles.some(bubble => bubble.name === name || bubble.link === link);
-    if (duplicate) {
-        return;
-    }
+function search() {
+    const query = document.getElementById('search').value;
+    window.open(`https://duckduckgo.com/?q=${encodeURIComponent(query)}`, '_blank');
+}
 
-    const newBubble = {
-        name: name,
-        backgroundColor: color,
-        link: link,
-        image: imagePath || ''
-    };
-    bubbles.push(newBubble);
-    localStorage.setItem('bubbles', JSON.stringify(bubbles));
-    document.getElementById('addBubbleWindow').style.display = 'none';
-    location.reload();
+function openUploadBackgroundWindow() {
+    document.getElementById('backgroundImageInput').click();
+}
+
+function uploadBackground() {
+    const fileInput = document.getElementById('backgroundImageInput');
+    const file = fileInput.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const imageUrl = event.target.result;
+            document.body.style.backgroundImage = `url('${imageUrl}')`;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function loadCustomBackground() {
+    const customBackground = localStorage.getItem('customBackground');
+    if (customBackground) {
+        document.body.style.backgroundImage = `url('${customBackground}')`;
+    } else {
+        document.body.style.backgroundColor = 'gray';
+    }
 }

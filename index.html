@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Inicio</title>
+    <title>Nueva pestaña</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="dolphin.png" type="image/x-icon">
 </head>
 <body>
     <div class="container">
@@ -31,28 +32,46 @@
         </div>
     </div>
     <button id="reset-button" onclick="resetBubbles()">
-        <img src="reset.png" alt="Reset">
+        <img src="actualizar.png" alt="Reset">
     </button>
     <button id="toggle-animations-button" onclick="toggleAnimations()">
-        <img src="animacionesOn.png" alt="Toggle Animations">
+        <img src="pausar.png" alt="Toggle Animations">
     </button>
     <button id="change-background-button" onclick="changeBackground()">
-        <img src="changeBackground.png" alt="Change Background">
+        <img src="galeria.png" alt="Change Background">
     </button>
     <button id="add-bubble-button" onclick="openAddBubbleWindow()">
-        <img src="addBubble.png" alt="Add Bubble">
+        <img src="mas.png" alt="Add Bubble">
     </button>
     <button id="resetBubbles" onclick="initBubble()">
-        <img src="restart.png" alt="Restart">
+        <img src="aleatorio.png" alt="Restart">
     </button>
+    <button id="upload-background-button" onclick="openUploadBackgroundWindow()">
+        <img src="upload.png" alt="Upload Background">
+    </button>
+    <input type="file" id="backgroundImageInput" accept="image/*" style="display: none;" onchange="uploadBackground()">
     <div class="add-bubble-window" id="addBubbleWindow">
+        <button class="close-button" onclick="closeAddBubbleWindow()">×</button>
         <input type="text" id="bubbleName" placeholder="Nombre de la burbuja">
         <input type="text" id="bubbleLink" placeholder="Hiperenlace">
         <input type="color" id="bubbleColor" value="#ff0000">
         <input type="file" id="bubbleImage" accept="image/*">
-        <button onclick="addBubble()">Añadir Burbuja</button>
+        <button class="round-button" onclick="addBubble()">
+            <img src="addBubble.png" alt="Add Bubble">
+        </button>
     </div>
     <script src="animations.js"></script>
     <script src="clock.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("search").focus();
+        });
+
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") {
+                closeAddBubbleWindow();
+            }
+        });
+    </script>
 </body>
 </html>
