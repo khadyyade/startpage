@@ -500,6 +500,7 @@ function loadCustomBackground() {
     if (customBackground) {
         document.body.style.backgroundImage = `url('${customBackground}')`;
     } else {
-        document.body.style.backgroundColor = 'gray';
+        // Ensure a default background image is always set
+        document.body.style.backgroundImage = `url('${backgrounds[0]}')`;
     }
 }
