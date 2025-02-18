@@ -1,20 +1,24 @@
+/* Este archivo contiene los estilos CSS para la página de inicio, incluyendo el diseño de la interfaz y las animaciones de las burbujas. */
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url('fondo1.jpg') no-repeat center center/cover;
+    background: url('fondo1.jpg') no-repeat center center/cover; /* Fondo inicial */
     overflow: hidden;
     position: relative;
 }
+
 .container {
     position: relative;
     width: 400px;
     height: 60px;
-    background: rgba(20, 20, 20, 0.9);
+    background: rgba(20, 20, 20, 0.9); /* Fondo semitransparente */
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* Sombra */
     display: flex;
     align-items: center;
     padding: 10px;
@@ -22,13 +26,16 @@ body {
     transform: perspective(1000px) translateZ(10px);
     z-index: 2;
 }
+
 .container:hover {
-    box-shadow: 0 0 15px #00bfff;
+    box-shadow: 0 0 15px #00bfff; /* Sombra al pasar el ratón */
 }
+
 .container:active, .container.highlight {
-    background: #1e3a5f;
+    background: #1e3a5f; /* Fondo al hacer clic o resaltar */
     box-shadow: 0 0 20px #00bfff;
 }
+
 input {
     flex: 1;
     background: transparent;
@@ -39,17 +46,19 @@ input {
     text-shadow: 0 0 5px #00bfff;
     padding-left: 10px;
 }
+
 .icon {
     width: 24px;
     height: 24px;
-    background: url('lupa.png') no-repeat center center;
+    background: url('lupa.png') no-repeat center center; /* Icono de búsqueda */
     background-size: contain;
     cursor: pointer;
 }
+
 .bubble {
     position: absolute;
     border-radius: 50%;
-    transition: transform 0.3s, box-shadow 1s ease-in-out, filter 0.5s, background 0.5s; /* Add transition for background */
+    transition: transform 0.3s, box-shadow 1s ease-in-out, filter 0.5s, background 0.5s; /* Transición para el fondo */
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -62,12 +71,14 @@ input {
     border: 2px solid;
     animation: float 10s ease-in-out infinite;
 }
+
 .bubble:hover {
     filter: brightness(120%);
     transform: scale(1.1);
     box-shadow: 0 0 5px var(--bubble-color), 0 0 10px var(--bubble-color), 0 0 15px var(--bubble-color), 0 0 20px var(--bubble-color);
-    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.3)); /* Brighten background on hover */
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.3)); /* Aclara el fondo al pasar el ratón */
 }
+
 .bubble img {
     width: 60%;
     height: 60%;
@@ -81,36 +92,39 @@ input {
 .bubble.dragging {
     opacity: 0.8;
     z-index: 1000;
-    transition: none; /* Disable transition during drag */
+    transition: none; /* Desactiva la transición durante el arrastre */
 }
 
 #reset-button {
     position: fixed;
     bottom: 10px;
     right: 10px;
-    width: 30px; /* Smaller size */
-    height: 30px; /* Smaller size */
+    width: 30px; /* Tamaño más pequeño */
+    height: 30px; /* Tamaño más pequeño */
     background: transparent;
     border: none;
     cursor: pointer;
     z-index: 3;
 }
+
 #reset-button img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
+
 #toggle-animations-button {
     position: fixed;
     bottom: 50px;
     right: 10px;
-    width: 30px; /* Smaller size */
-    height: 30px; /* Smaller size */
+    width: 30px; /* Tamaño más pequeño */
+    height: 30px; /* Tamaño más pequeño */
     background: transparent;
     border: none;
     cursor: pointer;
     z-index: 3;
 }
+
 #toggle-animations-button img {
     width: 100%;
     height: 100%;
@@ -121,13 +135,14 @@ input {
     position: fixed;
     bottom: 90px;
     right: 10px;
-    width: 30px; /* Smaller size */
-    height: 30px; /* Smaller size */
+    width: 30px; /* Tamaño más pequeño */
+    height: 30px; /* Tamaño más pequeño */
     background: transparent;
     border: none;
     cursor: pointer;
     z-index: 3;
 }
+
 #change-background-button img {
     width: 100%;
     height: 100%;
@@ -138,18 +153,20 @@ input {
     position: fixed;
     bottom: 130px;
     right: 10px;
-    width: 30px; /* Smaller size */
-    height: 30px; /* Smaller size */
+    width: 30px; /* Tamaño más pequeño */
+    height: 30px; /* Tamaño más pequeño */
     background: transparent;
     border: none;
     cursor: pointer;
     z-index: 3;
 }
+
 #add-bubble-button img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
+
 .add-bubble-window {
     position: fixed;
     bottom: 170px;
@@ -161,6 +178,7 @@ input {
     display: none;
     z-index: 4;
 }
+
 .add-bubble-window input {
     width: 100%;
     margin-bottom: 10px;
@@ -168,6 +186,7 @@ input {
     border-radius: 5px;
     border: none;
 }
+
 .add-bubble-window input[type="color"] {
     width: 100%;
     margin-bottom: 10px;
@@ -176,6 +195,7 @@ input {
     border: none;
     height: 40px;
 }
+
 .add-bubble-window button {
     width: 100%;
     padding: 10px;
@@ -188,15 +208,16 @@ input {
 
 #resetBubbles {
     position: fixed;
-    bottom: 170px; /* Adjust position to be above the other buttons */
+    bottom: 170px; /* Ajusta la posición para estar por encima de los otros botones */
     right: 10px;
-    width: 30px; /* Smaller size */
-    height: 30px; /* Smaller size */
+    width: 30px; /* Tamaño más pequeño */
+    height: 30px; /* Tamaño más pequeño */
     background: transparent;
     border: none;
     cursor: pointer;
     z-index: 3;
 }
+
 #resetBubbles img {
     width: 100%;
     height: 100%;
@@ -207,13 +228,14 @@ input {
     position: fixed;
     bottom: 210px;
     right: 10px;
-    width: 30px; /* Smaller size */
-    height: 30px; /* Smaller size */
+    width: 30px; /* Tamaño más pequeño */
+    height: 30px; /* Tamaño más pequeño */
     background: transparent;
     border: none;
     cursor: pointer;
     z-index: 3;
 }
+
 #upload-background-button img {
     width: 100%;
     height: 100%;
@@ -224,8 +246,9 @@ input {
     position: absolute;
     background: url('bubble.png') no-repeat center center;
     background-size: contain;
-    animation: float-up 3s ease-in-out forwards; /* Increase duration to 3s */
+    animation: float-up 3s ease-in-out forwards; /* Aumenta la duración a 3s */
 }
+
 @keyframes float-up {
     0% {
         transform: translateY(0) translateX(0);
@@ -299,6 +322,7 @@ input {
         opacity: 0;
     }
 }
+
 .particle {
     position: absolute;
     width: 5px;
@@ -308,6 +332,7 @@ input {
     pointer-events: none;
     animation: particle-animation 1s ease-out forwards;
 }
+
 @keyframes particle-animation {
     0% {
         transform: scale(1);
@@ -318,6 +343,7 @@ input {
         opacity: 0;
     }
 }
+
 @keyframes float {
     0% {
         transform: translate(0, 0);
@@ -343,7 +369,7 @@ input {
     transform: translateY(-50%);
     display: flex;
     justify-content: center;
-    pointer-events: none; /* Make the container unselectable */
+    pointer-events: none; /* Hace que el contenedor no sea seleccionable */
 }
 
 #clockContainerWrapper.left {
@@ -360,33 +386,33 @@ input {
 
 #clockContainer {
     text-align: center;
-    color: rgba(255, 255, 255, 1); /* Fully opaque white color */
-    font-family: 'Exo', sans-serif; /* Change to a similar font */
-    text-shadow: 0 0 10px rgba(0, 0, 43), 0 0 20px rgb(0, 0, 43), 0 0 30px rgba(0, 0, 43); /* Increase dark blue shadow visibility */
-    transition: opacity 0.5s ease-in-out; /* Add transition effect */
+    color: rgba(255, 255, 255, 1); /* Color blanco completamente opaco */
+    font-family: 'Exo', sans-serif; /* Cambia a una fuente similar */
+    text-shadow: 0 0 10px rgba(0, 0, 43), 0 0 20px rgb(0, 0, 43), 0 0 30px rgba(0, 0, 43); /* Aumenta la visibilidad de la sombra azul oscuro */
+    transition: opacity 0.5s ease-in-out; /* Añade efecto de transición */
     min-width: 150px;
 }
 
 #hour, #minute {
-    font-size: 5vw; /* Slightly decrease size */
+    font-size: 5vw; /* Disminuye ligeramente el tamaño */
     line-height: 1;
-    font-weight: 600; /* Slightly increase font weight */
+    font-weight: 600; /* Aumenta ligeramente el grosor de la fuente */
 }
 
 #date {
-    font-size: 1.5vw; /* Decrease size */
-    font-weight: 600; /* Slightly increase font weight */
+    font-size: 1.5vw; /* Disminuye el tamaño */
+    font-weight: 600; /* Aumenta ligeramente el grosor de la fuente */
 }
 
 @media (min-width: 768px) {
     #clockContainerWrapper {
-        display: flex; /* Show on larger screens */
+        display: flex; /* Muestra en pantallas más grandes */
     }
 }
 
 @media (max-width: 768px) {
     #clockContainerWrapper {
-        display: none; /* Hide on mobile devices */
+        display: none; /* Oculta en dispositivos móviles */
     }
 }
 
@@ -419,16 +445,18 @@ body:hover #clockContainerWrapper.right:hover #clockContainer {
     z-index: 2;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.5s, visibility 0.5s; /* Add transition for opacity and visibility */
+    transition: opacity 0.5s, visibility 0.5s; /* Añade transición para opacidad y visibilidad */
 }
+
 .bubble:hover .delete-button,
 .delete-button:hover {
-    opacity: 1; /* Ensure the delete button is fully visible */
-    visibility: visible; /* Ensure the delete button is visible */
+    opacity: 1; /* Asegura que el botón de eliminar sea completamente visible */
+    visibility: visible; /* Asegura que el botón de eliminar sea visible */
 }
+
 .bubble .delete-button {
-    opacity: 0; /* Start with the delete button hidden */
-    visibility: hidden; /* Start with the delete button hidden */
+    opacity: 0; /* Comienza con el botón de eliminar oculto */
+    visibility: hidden; /* Comienza con el botón de eliminar oculto */
 }
 
 .add-bubble-window {

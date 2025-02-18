@@ -1,3 +1,5 @@
+<!-- Este archivo contiene la estructura HTML de la página de inicio, incluyendo la barra de búsqueda, el reloj y los botones de control. -->
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,10 +15,12 @@
     <link rel="icon" href="dolphin.png" type="image/x-icon">
 </head>
 <body>
+    <!-- Contenedor de la barra de búsqueda -->
     <div class="container">
         <input type="text" id="search" placeholder="Buscar...">
         <div class="icon" onclick="search()"></div>
     </div>
+    <!-- Contenedor del reloj izquierdo -->
     <div id="clockContainerWrapper" class="left">
         <div id="clockContainer">
             <div id="hour"></div>
@@ -24,6 +28,7 @@
             <div id="date"></div>
         </div>
     </div>
+    <!-- Contenedor del reloj derecho -->
     <div id="clockContainerWrapper" class="right">
         <div id="clockContainer">
             <div id="hour"></div>
@@ -31,22 +36,29 @@
             <div id="date"></div>
         </div>
     </div>
+    <!-- Botón de reinicio -->
     <button id="reset-button" onclick="resetBubbles()">
         <img src="actualizar.png" alt="Reset">
     </button>
+    <!-- Botón para pausar/continuar animaciones -->
     <button id="toggle-animations-button" onclick="toggleAnimations()">
         <img src="pausar.png" alt="Toggle Animations">
     </button>
+    <!-- Botón para cambiar el fondo -->
     <button id="change-background-button" onclick="changeBackground()">
         <img src="galeria.png" alt="Change Background">
     </button>
+    <!-- Botón para añadir una burbuja -->
     <button id="add-bubble-button" onclick="openAddBubbleWindow()">
         <img src="mas.png" alt="Add Bubble">
     </button>
+    <!-- Botón para reiniciar las burbujas -->
     <button id="resetBubbles" onclick="initBubble()">
         <img src="aleatorio.png" alt="Restart">
     </button>
+    <!-- Input para subir una imagen de fondo -->
     <input type="file" id="backgroundImageInput" accept="image/*" style="display: none;" onchange="uploadBackground()">
+    <!-- Ventana para añadir una burbuja -->
     <div class="add-bubble-window" id="addBubbleWindow">
         <button class="close-button" onclick="closeAddBubbleWindow()">×</button>
         <input type="text" id="bubbleName" placeholder="Nombre de la burbuja">
@@ -57,13 +69,16 @@
             <img src="mas.png" alt="Add Bubble">
         </button>
     </div>
+    <!-- Scripts de animaciones y reloj -->
     <script src="animations.js"></script>
     <script src="clock.js"></script>
     <script>
+        // Enfocar el campo de búsqueda al cargar la página
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("search").focus();
         });
 
+        // Cerrar la ventana de añadir burbuja al presionar la tecla Escape
         document.addEventListener("keydown", function(event) {
             if (event.key === "Escape") {
                 closeAddBubbleWindow();

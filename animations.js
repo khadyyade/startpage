@@ -1,31 +1,34 @@
-document.addEventListener('DOMContentLoaded', () => {
-    initializeBubbles();
-    createBubbles();
-    addSearchBarEffects();
-    animateBubbles();
-    bubbleInterval = setInterval(emitBubbles, 1000); // Emit bubbles every 1000ms
+// Este archivo contiene las funciones para inicializar y manejar las animaciones y burbujas en la página de inicio.
 
-    // Set initial button images
+document.addEventListener('DOMContentLoaded', () => {
+    initializeBubbles(); // Inicializa las burbujas si no existen en el almacenamiento local
+    createBubbles(); // Crea las burbujas en la página
+    addSearchBarEffects(); // Añade efectos a la barra de búsqueda
+    animateBubbles(); // Anima las burbujas
+    bubbleInterval = setInterval(emitBubbles, 1000); // Emite burbujas cada 1000ms
+
+    // Establece las imágenes iniciales de los botones
     document.getElementById('resetButton').src = 'reset.png';
     document.getElementById('toggleAnimationsButton').src = 'animacionesOn.png';
-    document.getElementById('changeBackgroundButton').src = 'changeBackground.png'; // Set initial image for the new button
-    document.getElementById('uploadBackgroundButton').src = 'upload.png'; // Set initial image for the new button
+    document.getElementById('changeBackgroundButton').src = 'changeBackground.png'; // Establece la imagen inicial para el nuevo botón
+    document.getElementById('uploadBackgroundButton').src = 'upload.png'; // Establece la imagen inicial para el nuevo botón
 
-    // Load custom background if available
+    // Carga el fondo personalizado si está disponible
     loadCustomBackground();
 
-    // Focus the search input when the page loads
+    // Enfoca el input de búsqueda cuando la página carga
     document.getElementById('search').focus();
 });
 
-let animationsEnabled = true;
-let bubbleInterval;
-let currentBackgroundIndex = 0;
-const backgrounds = ['fondo1.jpg', 'fondo2.jpg', 'fondo3.png', 'fondo4.png', 'fondo5.jpg'];
+let animationsEnabled = true; // Variable para controlar si las animaciones están habilitadas
+let bubbleInterval; // Intervalo para emitir burbujas
+let currentBackgroundIndex = 0; // Índice del fondo actual
+const backgrounds = ['fondo1.jpg', 'fondo2.jpg', 'fondo3.png', 'fondo4.png', 'fondo5.jpg']; // Lista de fondos disponibles
 
 function initializeBubbles() {
     if (!localStorage.getItem('bubbles')) {
         const initialBubbles = [
+            // Lista de burbujas iniciales con sus propiedades
             {
                 "name": "YouTube",
                 "backgroundColor": "hsl(0, 70%, 80%)",
@@ -111,51 +114,51 @@ function initializeBubbles() {
                 "image": "linkedin.png"
             }
         ];
-        localStorage.setItem('bubbles', JSON.stringify(initialBubbles));
+        localStorage.setItem('bubbles', JSON.stringify(initialBubbles)); // Guarda las burbujas iniciales en el almacenamiento local
     }
 }
 
 function toggleAnimations() {
-    animationsEnabled = !animationsEnabled;
+    animationsEnabled = !animationsEnabled; // Alterna el estado de las animaciones
     const bubbles = document.querySelectorAll('.bubble, .floating-bubble');
     bubbles.forEach(bubble => {
         if (bubble.classList.contains('floating-bubble')) {
-            bubble.style.display = animationsEnabled ? 'block' : 'none';
+            bubble.style.display = animationsEnabled ? 'block' : 'none'; // Muestra u oculta las burbujas flotantes
         } else {
-            bubble.style.animationPlayState = animationsEnabled ? 'running' : 'paused';
+            bubble.style.animationPlayState = animationsEnabled ? 'running' : 'paused'; // Pausa o reanuda la animación de las burbujas
         }
     });
 
     if (animationsEnabled) {
-        bubbleInterval = setInterval(emitBubbles, 1000);
-        document.getElementById('toggleAnimationsButton').src = 'animacionesOn.png';
+        bubbleInterval = setInterval(emitBubbles, 1000); // Reinicia el intervalo de emisión de burbujas
+        document.getElementById('toggleAnimationsButton').src = 'animacionesOn.png'; // Cambia la imagen del botón
     } else {
-        clearInterval(bubbleInterval);
-        document.getElementById('toggleAnimationsButton').src = 'animacionesOff.png';
+        clearInterval(bubbleInterval); // Detiene el intervalo de emisión de burbujas
+        document.getElementById('toggleAnimationsButton').src = 'animacionesOff.png'; // Cambia la imagen del botón
     }
 }
 
 function changeBackground() {
-    currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.length;
-    document.body.style.backgroundImage = `url('${backgrounds[currentBackgroundIndex]}')`;
+    currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.length; // Cambia al siguiente fondo en la lista
+    document.body.style.backgroundImage = `url('${backgrounds[currentBackgroundIndex]}')`; // Actualiza la imagen de fondo
 }
 
 function createBubbles() {
-    let positions = [];
-    const bubbles = JSON.parse(localStorage.getItem('bubbles')) || [];
+    let positions = []; // Array para almacenar las posiciones de las burbujas
+    const bubbles = JSON.parse(localStorage.getItem('bubbles')) || []; // Obtiene las burbujas del almacenamiento local
     const container = document.querySelector('.container');
     const containerRect = container.getBoundingClientRect();
     const centerX = containerRect.left + containerRect.width / 2;
     const centerY = containerRect.top + containerRect.height / 2;
-    const margin = 0.1 * Math.min(window.innerWidth, window.innerHeight); // 10% margin
+    const margin = 0.1 * Math.min(window.innerWidth, window.innerHeight); // Margen del 10%
 
     bubbles.forEach((bubble, i) => {
         let bubbleElement = document.createElement('a');
         bubbleElement.classList.add('bubble');
         bubbleElement.href = bubble.link;
         bubbleElement.target = '_blank';
-        bubbleElement.style.setProperty('--bubble-color', bubble.backgroundColor); // Set CSS variable for bubble color
-        let size = window.innerWidth < 768 ? Math.random() * 20 + 40 : Math.random() * 30 + 65; // Smaller size range for smaller screens
+        bubbleElement.style.setProperty('--bubble-color', bubble.backgroundColor); // Establece la variable CSS para el color de la burbuja
+        let size = window.innerWidth < 768 ? Math.random() * 20 + 40 : Math.random() * 30 + 65; // Tamaño de la burbuja según el tamaño de la pantalla
         let x, y, overlapping;
 
         do {
@@ -170,8 +173,8 @@ function createBubbles() {
 
         bubbleElement.style.width = `${size}px`;
         bubbleElement.style.height = `${size}px`;
-        bubbleElement.style.background = bubble.backgroundColor; // Ensure unique colors
-        bubbleElement.style.borderColor = bubble.backgroundColor; // Set border color to match bubble color
+        bubbleElement.style.background = bubble.backgroundColor; // Asegura colores únicos
+        bubbleElement.style.borderColor = bubble.backgroundColor; // Establece el color del borde para que coincida con el color de la burbuja
         bubbleElement.style.top = `${y}px`;
         bubbleElement.style.left = `${x}px`;
         let img = document.createElement('img');
@@ -187,7 +190,7 @@ function createBubbles() {
             bubbleElement.appendChild(text);
         }
 
-        // Add delete button
+        // Añadir botón de eliminar
         let deleteButton = document.createElement('div');
         deleteButton.classList.add('delete-button');
         deleteButton.innerHTML = '×';
@@ -208,22 +211,22 @@ function createBubbles() {
                     deleteButton.style.opacity = '0';
                     deleteButton.style.visibility = 'hidden';
                 }
-            }, 400); // Delay the disappearance by 500ms
+            }, 400); // Retrasa la desaparición por 400ms
         };
 
-        // Add drag functionality
+        // Añadir funcionalidad de arrastre
         let isDragging = false;
         let offsetX, offsetY;
         let wasDragging = false;
 
         bubbleElement.addEventListener('mousedown', (e) => {
-            e.preventDefault(); // Prevent default drag behavior
+            e.preventDefault(); // Previene el comportamiento de arrastre por defecto
             isDragging = true;
             wasDragging = false;
             offsetX = e.clientX - bubbleElement.getBoundingClientRect().left;
             offsetY = e.clientY - bubbleElement.getBoundingClientRect().top;
             bubbleElement.classList.add('dragging');
-            bubbleElement.style.animationPlayState = 'paused'; // Pause animation during drag
+            bubbleElement.style.animationPlayState = 'paused'; // Pausa la animación durante el arrastre
         });
 
         document.addEventListener('mousemove', (e) => {
@@ -239,20 +242,20 @@ function createBubbles() {
             if (isDragging) {
                 isDragging = false;
                 bubbleElement.classList.remove('dragging');
-                bubbleElement.style.animationPlayState = 'running'; // Resume animation after drag
+                bubbleElement.style.animationPlayState = 'running'; // Reanuda la animación después del arrastre
             }
         });
 
         bubbleElement.addEventListener('click', (e) => {
             if (wasDragging) {
-                e.preventDefault(); // Prevent link from opening if it was dragged
+                e.preventDefault(); // Previene que el enlace se abra si fue arrastrado
             }
         });
 
         document.body.appendChild(bubbleElement);
     });
 
-    // Reposition and resize bubbles on window resize
+    // Reposiciona y redimensiona las burbujas al redimensionar la ventana
     window.addEventListener('resize', () => {
         const containerRect = container.getBoundingClientRect();
         const centerX = containerRect.left + containerRect.width / 2;
@@ -265,23 +268,23 @@ function createBubbles() {
                 let newX = centerX + pos.relativeX;
                 let newY = centerY + pos.relativeY;
 
-                // Ensure bubbles stay within the window bounds
+                // Asegura que las burbujas se mantengan dentro de los límites de la ventana
                 newX = Math.max(margin, Math.min(newX, window.innerWidth - pos.size - margin));
                 newY = Math.max(margin, Math.min(newY, window.innerHeight - pos.size - margin));
 
-                // Ensure bubbles do not overlap
+                // Asegura que las burbujas no se superpongan
                 let overlapping = availablePositions.some(ap => Math.hypot(ap.x - newX, ap.y - newY) < (pos.size + ap.size) / 2);
                 if (!overlapping) {
                     bubble.style.top = `${newY}px`;
                     bubble.style.left = `${newX}px`;
-                    bubble.style.transition = 'top 0.5s, left 0.5s'; // Add transition for smooth sliding
+                    bubble.style.transition = 'top 0.5s, left 0.5s'; // Añade transición para un deslizamiento suave
                     bubble.style.display = 'block';
                     availablePositions.push({ x: newX, y: newY, size: pos.size });
                 } else {
                     bubble.style.display = 'none';
                 }
 
-                // Adjust bubble size based on window width
+                // Ajusta el tamaño de la burbuja según el ancho de la ventana
                 let newSize = window.innerWidth < 768 ? Math.random() * 20 + 40 : Math.random() * 30 + 65;
                 bubble.style.width = `${newSize}px`;
                 bubble.style.height = `${newSize}px`;
@@ -321,7 +324,7 @@ function resetBubbles() {
         const containerRect = document.querySelector('.container').getBoundingClientRect();
         const centerX = containerRect.left + containerRect.width / 2;
         const centerY = containerRect.top + containerRect.height / 2;
-        const margin = 0.1 * Math.min(window.innerWidth, window.innerHeight); // 10% margin
+        const margin = 0.1 * Math.min(window.innerWidth, window.innerHeight); // Margen del 10%
 
         do {
             x = Math.random() * (window.innerWidth - size - 2 * margin) + margin;
@@ -336,7 +339,7 @@ function resetBubbles() {
 
         bubble.style.top = `${y}px`;
         bubble.style.left = `${x}px`;
-        bubble.style.transition = 'top 0.5s, left 0.5s'; // Add transition for smooth sliding
+        bubble.style.transition = 'top 0.5s, left 0.5s'; // Añade transición para un deslizamiento suave
     });
 }
 
@@ -349,7 +352,7 @@ function addSearchBarEffects() {
             container.classList.add('highlight');
             setTimeout(() => {
                 container.classList.remove('highlight');
-            }, 100); // Faster highlight effect
+            }, 100); // Efecto de resaltado más rápido
             emitBubbles();
         }
     });
@@ -365,33 +368,33 @@ function addSearchBarEffects() {
         container.classList.add('highlight');
         setTimeout(() => {
             container.classList.remove('highlight');
-        }, 100); // Faster highlight effect
+        }, 100); // Efecto de resaltado más rápido
     });
 }
 
 function emitBubbles() {
-    if (!animationsEnabled) return; // Check if animations are enabled
+    if (!animationsEnabled) return; // Verifica si las animaciones están habilitadas
 
-    const bubbleCount = 3; // Reduce the number of bubbles
+    const bubbleCount = 3; // Reduce el número de burbujas
     for (let i = 0; i < bubbleCount; i++) {
         const bubble = document.createElement('div');
         bubble.classList.add('floating-bubble');
         bubble.style.left = `${Math.random() * 100}%`;
-        bubble.style.top = `${Math.random() * 100}%`; // Randomize starting position
-        bubble.style.width = `${Math.random() * 20 + 10}px`; // Randomize size
+        bubble.style.top = `${Math.random() * 100}%`; // Posición inicial aleatoria
+        bubble.style.width = `${Math.random() * 20 + 10}px`; // Tamaño aleatorio
         bubble.style.height = bubble.style.width;
         document.body.appendChild(bubble);
         setTimeout(() => {
             bubble.remove();
-        }, 3000); // Remove bubble after 3 seconds
+        }, 3000); // Elimina la burbuja después de 3 segundos
     }
 }
 
 function animateBubbles() {
     const bubbles = document.querySelectorAll('.bubble');
     bubbles.forEach(bubble => {
-        const randomDuration = Math.random() * 4 + 6; // Random duration between 5 and 10 seconds
-        const randomX = Math.random() * 20 - 10; // Random movement between -10 and 10 pixels
+        const randomDuration = Math.random() * 4 + 6; // Duración aleatoria entre 5 y 10 segundos
+        const randomX = Math.random() * 20 - 10; // Movimiento aleatorio entre -10 y 10 píxeles
         const randomY = Math.random() * 20 - 10;
         bubble.style.animation = `float ${randomDuration}s ease-in-out infinite`;
         bubble.style.setProperty('--randomX', `${randomX}px`);
@@ -444,7 +447,7 @@ function addBubble() {
 function saveBubble(name, link, color, imagePath) {
     const bubbles = JSON.parse(localStorage.getItem('bubbles')) || [];
 
-    // Check for duplicate name or link
+    // Verifica si hay nombres o enlaces duplicados
     const duplicate = bubbles.some(bubble => bubble.name === name || bubble.link === link);
     if (duplicate) {
         return;
@@ -500,7 +503,7 @@ function loadCustomBackground() {
     if (customBackground) {
         document.body.style.backgroundImage = `url('${customBackground}')`;
     } else {
-        // Ensure a default background image is always set
+        // Asegura que siempre se establezca una imagen de fondo predeterminada
         document.body.style.backgroundImage = `url('${backgrounds[0]}')`;
     }
 }
