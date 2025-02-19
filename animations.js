@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let animationsEnabled = true; // Variable para controlar si las animaciones están habilitadas
 let bubbleInterval; // Intervalo para emitir burbujas
 const backgrounds = ['fondo1.jpg', 'fondo2.jpg', 'fondo3.jpg', 'fondo4.jpg', 'fondo5.jpg']; // Lista de fondos disponibles
-const backgroundsMobil = ['fondoM1.jpg', 'fondoM2.jpg', 'fondoM5.jpg']; // Lista de fondos disponibles para mobiles.
+const backgroundsMobil = ['fondoM1.jpg', 'fondoM2.jpg', 'fondoM3.jpg', 'fondoM4.jpg', 'fondoM5.jpg']; // Lista de fondos disponibles para mobiles.
 let currentBackgroundIndex = 0; // Variable para llevar el seguimiento del fondo actual
 
 function initializeBubbles() {
@@ -143,14 +143,26 @@ function changeBackground() {
     const isMobile = window.innerWidth <= 768;
     const backgroundsToUse = isMobile ? backgroundsMobil : backgrounds;
     currentBackgroundIndex = (currentBackgroundIndex + 1) % backgroundsToUse.length;
-    document.body.style.backgroundImage = `url('${backgroundsToUse[currentBackgroundIndex]}')`;
+    const newBackground = backgroundsToUse[currentBackgroundIndex];
+
+    const img = new Image();
+    img.src = newBackground;
+    img.onload = () => {
+        document.body.style.backgroundImage = `url('${newBackground}')`;
+    };
 }
 
 function loadRandomBackground() {
     const isMobile = window.innerWidth <= 768;
     const backgroundsToUse = isMobile ? backgroundsMobil : backgrounds;
     const randomIndex = Math.floor(Math.random() * backgroundsToUse.length);
-    document.body.style.backgroundImage = `url('${backgroundsToUse[randomIndex]}')`;
+    const newBackground = backgroundsToUse[randomIndex];
+
+    const img = new Image();
+    img.src = newBackground;
+    img.onload = () => {
+        document.body.style.backgroundImage = `url('${newBackground}')`;
+    };
 }
 
 function createBubbles() {
