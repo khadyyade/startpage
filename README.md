@@ -65,5 +65,13 @@ Las burbujas se distribuyen aleatoriamente en la pantalla cuando se crean, lo qu
 
 La página de inicio incluye animaciones eficientes para las burbujas y otros elementos. Puedes activar o desactivar las animaciones utilizando el botón de pausa/continuar animaciones. Cuando las animaciones están desactivadas, las burbujas flotantes se ocultan y las animaciones de las burbujas se pausan.
 
+## Versión Móvil 
+
+### Redimensionable
+
+Para adaptar el uso de esta página de inicio a todos los dispositivos, también se ha adaptado para dispositivos móviles con tamaños de ventana más pequeños. Se han mantenido las funciones originales, a excepción del reloj, y mejorado otras. A continuación dejo un video con el funcionamiento.
+
+https://github.com/user-attachments/assets/00d3c3b0-b7b2-418b-bdfd-c8875f7f6521
+
 
 <sup><sup style="color: grey;">by Roger García Doncel</sup></sup>
