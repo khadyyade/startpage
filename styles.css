@@ -10,6 +10,7 @@ body {
     background: url('fondo1.jpg') no-repeat center center/cover; /* Fondo inicial */
     overflow: hidden;
     position: relative;
+    touch-action: none; /* Desactiva el comportamiento de arrastre por defecto en dispositivos táctiles */
 }
 
 .container {
@@ -25,6 +26,7 @@ body {
     transition: 0.3s;
     transform: perspective(1000px) translateZ(10px);
     z-index: 2;
+    margin: 20px; /* Añade márgenes para que no pegue con los bordes de la pantalla */
 }
 
 .container:hover {
@@ -169,14 +171,18 @@ input {
 
 .add-bubble-window {
     position: fixed;
-    bottom: 170px;
-    right: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 300px;
     background: rgba(0, 0, 0, 0.8);
     border-radius: 10px;
     padding: 20px;
     display: none;
     z-index: 4;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    background-size: cover; /* Asegura que el fondo se adapte al tamaño de la ventana */
+    background-position: center; /* Centra el fondo */
 }
 
 .add-bubble-window input {
@@ -471,6 +477,8 @@ body:hover #clockContainerWrapper.right:hover #clockContainer {
     display: none;
     z-index: 4;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    background-size: cover; /* Asegura que el fondo se adapte al tamaño de la ventana */
+    background-position: center; /* Centra el fondo */
 }
 
 .add-bubble-window input {

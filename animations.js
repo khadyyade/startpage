@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('changeBackgroundButton').src = 'changeBackground.png'; // Establece la imagen inicial para el nuevo botón
     document.getElementById('uploadBackgroundButton').src = 'upload.png'; // Establece la imagen inicial para el nuevo botón
 
-    // Carga el fondo personalizado si está disponible
-    loadCustomBackground();
+    // Carga un fondo aleatorio al abrir la página
+    loadRandomBackground();
 
     // Enfoca el input de búsqueda cuando la página carga
     document.getElementById('search').focus();
@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let animationsEnabled = true; // Variable para controlar si las animaciones están habilitadas
 let bubbleInterval; // Intervalo para emitir burbujas
-let currentBackgroundIndex = 0; // Índice del fondo actual
 const backgrounds = ['fondo1.jpg', 'fondo2.jpg', 'fondo3.png', 'fondo4.png', 'fondo5.jpg']; // Lista de fondos disponibles
 
 function initializeBubbles() {
@@ -139,8 +138,12 @@ function toggleAnimations() {
 }
 
 function changeBackground() {
-    currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.length; // Cambia al siguiente fondo en la lista
-    document.body.style.backgroundImage = `url('${backgrounds[currentBackgroundIndex]}')`; // Actualiza la imagen de fondo
+    loadRandomBackground(); // Carga un nuevo fondo aleatorio
+}
+
+function loadRandomBackground() {
+    const randomIndex = Math.floor(Math.random() * backgrounds.length);
+    document.body.style.backgroundImage = `url('${backgrounds[randomIndex]}')`;
 }
 
 function createBubbles() {
@@ -242,13 +245,57 @@ function createBubbles() {
             if (isDragging) {
                 isDragging = false;
                 bubbleElement.classList.remove('dragging');
-                bubbleElement.style.animationPlayState = 'running'; // Reanuda la animación después del arrastre
+                if (animationsEnabled) {
+                    bubbleElement.style.animationPlayState = 'running'; // Reanuda la animación después del arrastre solo si las animaciones están habilitadas
+                }
             }
         });
 
         bubbleElement.addEventListener('click', (e) => {
             if (wasDragging) {
                 e.preventDefault(); // Previene que el enlace se abra si fue arrastrado
+            }
+        });
+
+        // Añadir funcionalidad de arrastre táctil
+        bubbleElement.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Previene el comportamiento de arrastre por defecto
+            isDragging = true;
+            wasDragging = false;
+            const touch = e.touches[0];
+            offsetX = touch.clientX - bubbleElement.getBoundingClientRect().left;
+            offsetY = touch.clientY - bubbleElement.getBoundingClientRect().top;
+            bubbleElement.classList.add('dragging');
+            bubbleElement.style.animationPlayState = 'paused'; // Pausa la animación durante el arrastre
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (isDragging) {
+                wasDragging = true;
+                const touch = e.touches[0];
+                bubbleElement.style.top = `${touch.clientY - offsetY}px`;
+                bubbleElement.style.left = `${touch.clientX - offsetX}px`;
+                checkWindowBounds(bubbleElement, size);
+            }
+        });
+
+        document.addEventListener('touchend', (e) => {
+            if (isDragging) {
+                isDragging = false;
+                bubbleElement.classList.remove('dragging');
+                if (animationsEnabled) {
+                    bubbleElement.style.animationPlayState = 'running'; // Reanuda la animación después del arrastre solo si las animaciones están habilitadas
+                }
+            }
+        });
+
+        document.addEventListener('touchcancel', (e) => {
+            if (isDragging) {
+                isDragging = false;
+                bubbleElement.classList.remove('dragging');
+                if (animationsEnabled) {
+                    bubbleElement.style.animationPlayState = 'running'; // Reanuda la animación después del arrastre solo si las animaciones están habilitadas
+                }
             }
         });
 
