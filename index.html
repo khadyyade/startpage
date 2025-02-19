@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="dolphin.png" type="image/x-icon">
+    <meta name="theme-color" content="#808080"> <!-- Set the theme color to gray -->
 </head>
 <body>
     <!-- Contenedor de la barra de búsqueda -->
@@ -74,7 +75,7 @@
     <script src="clock.js"></script>
     <script>
         const backgrounds = ['fondo1.jpg', 'fondo2.jpg', 'fondo3.png', 'fondo4.png', 'fondo5.jpg'];
-        const backgroundsMobil = ['fondoM1.jpg', 'fondoM2.jpg', 'fondoM3.png', 'fondoM4.png', 'fondoM5.jpg'];
+        const backgroundsMobil = ['fondoM1.jpg', 'fondoM2.jpg', 'fondoM5.jpg'];
 
         function preloadImages(images) {
             images.forEach(image => {
@@ -87,8 +88,16 @@
             const isMobile = window.innerWidth <= 768;
             preloadImages(isMobile ? backgroundsMobil : backgrounds);
             document.getElementById("search").focus();
-            loadRandomBackground(); // Ensure the background is set correctly on load
+            loadInitialBackground(isMobile); // Ensure the background is set correctly on load
         });
+
+        function loadInitialBackground(isMobile) {
+            if (isMobile) {
+                document.body.style.backgroundImage = `url('fondoM1.jpg')`;
+            } else {
+                document.body.style.backgroundImage = `url('${backgrounds[0]}')`;
+            }
+        }
 
         // Cerrar la ventana de añadir burbuja al presionar la tecla Escape
         document.addEventListener("keydown", function(event) {

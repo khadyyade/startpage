@@ -24,6 +24,7 @@ let animationsEnabled = true; // Variable para controlar si las animaciones est√
 let bubbleInterval; // Intervalo para emitir burbujas
 const backgrounds = ['fondo1.jpg', 'fondo2.jpg', 'fondo3.jpg', 'fondo4.jpg', 'fondo5.jpg']; // Lista de fondos disponibles
 const backgroundsMobil = ['fondoM1.jpg', 'fondoM2.jpg', 'fondoM5.jpg']; // Lista de fondos disponibles para mobiles.
+let currentBackgroundIndex = 0; // Variable para llevar el seguimiento del fondo actual
 
 function initializeBubbles() {
     if (!localStorage.getItem('bubbles')) {
@@ -139,7 +140,10 @@ function toggleAnimations() {
 }
 
 function changeBackground() {
-    loadRandomBackground(); // Carga un nuevo fondo aleatorio
+    const isMobile = window.innerWidth <= 768;
+    const backgroundsToUse = isMobile ? backgroundsMobil : backgrounds;
+    currentBackgroundIndex = (currentBackgroundIndex + 1) % backgroundsToUse.length;
+    document.body.style.backgroundImage = `url('${backgroundsToUse[currentBackgroundIndex]}')`;
 }
 
 function loadRandomBackground() {
