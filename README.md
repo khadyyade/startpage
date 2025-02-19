@@ -2,6 +2,9 @@
 
 Las páginas de inicio de los buscadores que la gente usa comúnmente son todos muy iguales y poco personalizables. Este proyecto pretende dar más vida a la página de inicio de tu buscador agregando marcadores flotantes y coloridos.
 
+![2025-02-18-235814_hyprshot](https://github.com/user-attachments/assets/9196d540-0c9e-4218-8ea4-1d18980b1aa7)
+
+
 ## Funcionamiento Básico
 
 ### Barra Buscadora
@@ -25,6 +28,12 @@ Las burbujas son marcadores flotantes que puedes personalizar con enlaces a tus 
 ### Añadir Burbujas
 
 Puedes crear nuevas burbujas utilizando la ventana de añadir burbuja. Haz clic en el botón "+" para abrir la ventana, donde podrás ingresar el nombre, el enlace, el color y la imagen de la burbuja. Las burbujas se guardan en el almacenamiento local del navegador, por lo que se mantendrán incluso después de cerrar y volver a abrir el navegador.
+
+![2025-02-18-235929_hyprshot](https://github.com/user-attachments/assets/4957b466-715f-4fb5-9cde-b88a40cdde48)
+
+
+![2025-02-19-000013_hyprshot](https://github.com/user-attachments/assets/467fb764-eaf0-46a2-a9d6-cb7aaf953203)
+
 
 ### Borrar Burbujas
 
@@ -56,6 +65,5 @@ Las burbujas se distribuyen aleatoriamente en la pantalla cuando se crean, lo qu
 
 La página de inicio incluye animaciones eficientes para las burbujas y otros elementos. Puedes activar o desactivar las animaciones utilizando el botón de pausa/continuar animaciones. Cuando las animaciones están desactivadas, las burbujas flotantes se ocultan y las animaciones de las burbujas se pausan.
 
----
 
-¡Disfruta de tu nueva página de inicio personalizada!
+<sup><sup style="color: grey;">by Roger García Doncel</sup></sup>
