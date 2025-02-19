@@ -73,9 +73,21 @@
     <script src="animations.js"></script>
     <script src="clock.js"></script>
     <script>
-        // Enfocar el campo de búsqueda al cargar la página
+        const backgrounds = ['fondo1.jpg', 'fondo2.jpg', 'fondo3.png', 'fondo4.png', 'fondo5.jpg'];
+        const backgroundsMobil = ['fondoM1.jpg', 'fondoM2.jpg', 'fondoM3.png', 'fondoM4.png', 'fondoM5.jpg'];
+
+        function preloadImages(images) {
+            images.forEach(image => {
+                const img = new Image();
+                img.src = image;
+            });
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
+            const isMobile = window.innerWidth <= 768;
+            preloadImages(isMobile ? backgroundsMobil : backgrounds);
             document.getElementById("search").focus();
+            loadRandomBackground(); // Ensure the background is set correctly on load
         });
 
         // Cerrar la ventana de añadir burbuja al presionar la tecla Escape
