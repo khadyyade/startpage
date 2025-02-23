@@ -544,14 +544,14 @@ body:hover #clockContainerWrapper.right:hover #clockContainer {
 
 #mascota {
     position: fixed;
-    width: 120px;  /* Ajusta según el tamaño del SVG */
+    width: 120px;
     height: 120px;
     bottom: 20px;
     left: 20px;
-    cursor: pointer;
-    transition: left 3s ease, top 3s ease;
+    cursor: grab;
     z-index: 100;
 }
+
 
 #pulpito {
     width: 100%;
