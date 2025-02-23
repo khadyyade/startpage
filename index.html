@@ -41,7 +41,22 @@
     <div id="mascota">
         <img id="pulpito" src="octopus-svgrepo-com.svg" alt="Pulpo">
         <div id="burbuja">Hola, soy Pulpi. ¿Te puedo ayudar en algo?</div>
-    </div>        
+    </div>
+    <div id="chat-container">
+        <div id="chat-header">
+            <div id="text-header">🐙</div>
+            <button id="close-chat">×</button>
+        </div>
+        <div id="chat-messages"></div>
+        <div id="chat-input-container">
+            <input type="text" id="chat-input" placeholder="Escribe un mensaje..." />
+            <button id="send-chat">
+                <img src="enviar.svg" alt="Enviar">
+            </button>
+        </div>
+    </div>
+    
+          
     <!-- Botón de reinicio -->
     <button id="reset-button" onclick="resetBubbles()">
         <img src="actualizar.png" alt="Reset">

@@ -608,3 +608,94 @@ body:hover #clockContainerWrapper.right:hover #clockContainer {
     animation-play-state: paused;  /* Detiene la animación */
 }
 
+/* Contenedor del chat */
+#chat-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 300px;
+    background: rgb(0, 0, 0);
+    border-radius: 10px;
+    color: #00bfff;
+    font-family: 'Exo', sans-serif;
+    box-shadow: 0 4px 10px #00bfff;
+    display: none; /* Oculto por defecto */
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 200;
+}
+
+/* Contenedor del input con botón */
+#chat-input-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #000000;
+}
+
+/* Encabezado del chat */
+#chat-header {
+    background: #000000;
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#text-header{
+    position: absolute;
+    left: 50%;
+   
+}
+
+#close-chat {
+    background: red;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto; /* Lo empuja a la derecha */
+}
+
+/* Área de mensajes */
+#chat-messages {
+    padding: 10px;
+    height: 200px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Input del chat estilizado */
+#chat-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 20px; /* Bordes redondeados */
+    outline: none;
+    font-size: 17px;
+    background: rgba(20, 20, 20, 0.9);
+    box-shadow: #00bfff;
+    opacity: 0.8;
+}
+
+
+/* Botón de enviar */
+#send-chat img {
+    width: 20px;
+    height: 20px;
+}
+
+#send-chat{
+    background-color: #000000;
+    border: none;
+}
