@@ -541,3 +541,70 @@ body:hover #clockContainerWrapper.right:hover #clockContainer {
     height: 100%;
     object-fit: contain;
 }
+
+#mascota {
+    position: fixed;
+    width: 120px;  /* Ajusta según el tamaño del SVG */
+    height: 120px;
+    bottom: 20px;
+    left: 20px;
+    cursor: pointer;
+    transition: left 3s ease, top 3s ease;
+    z-index: 100;
+}
+
+#pulpito {
+    width: 100%;
+    height: 100%;
+    animation: moverTentaculos 2s infinite ease-in-out;
+}
+
+/* Animación de los tentáculos (movimiento ondulante) */
+@keyframes moverTentaculos {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(2deg); }
+}
+/* Viñeta de Pulpi */
+#burbuja {
+    position: absolute;
+    bottom: 100px;  /* Aparece arriba de Pulpi */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgb(0, 0, 0);
+    color: #00bfff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: 'Exo', sans-serif;
+    font-size: 17px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Triangulito de la burbuja */
+#burbuja::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid rgb(0, 0, 0);
+}
+
+/* Efecto Hover: Mostrar burbuja y detener Pulpi */
+#mascota:hover #burbuja {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+#mascota:hover {
+    animation-play-state: paused;  /* Detiene la animación */
+}
+
